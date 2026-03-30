@@ -1,151 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Nutrimente - Clínica de Psicologia Nutricional</title>
-  <meta name="description"
-    content="Clínica de Psicologia Nutricional que une acolhimento e ciência para promover saúde mental e bem-estar.">
-
-  <link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <header>
-    <a class="brand" href="#">
-      <img src="img/LogoNutrimente.png" alt="Logo Nutrimente" class="logo-img">
-      Nutrimente
-    </a>
-    <button class="menu-toggle" id="menuToggle">☰</button>
-    <nav id="menuNav">
-      <a href="#oque">O que é?</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#top-profissionais">Equipe</a>
-      <a href="#agendamento">Agendamento</a>
-      <a href="#contato">Contato</a>
-    </nav>
-    <button class="login-btn" id="abrirLogin">Login</button>
-  </header>
+  <!-- Imagem grande -->
+  <img src="img/consulta.png" alt="consulta" class="bg-imagem">
 
-  <section id="oque">
-    <h2>O que é Psicologia Nutricional?</h2>
-    <div class="oque-container" style="display: flex; align-items: center; gap:1.5rem; flex-wrap: wrap;">
-      <p style="flex: 1; min-width: 250px;">
-        A Psicologia Nutricional compreende a interação entre mente e alimentação, ajudando você a entender emoções,
-        hábitos e comportamentos alimentares, promovendo equilíbrio entre corpo e mente.
-      </p>
-      <img src="img/doutor.png" alt="Psicologia Nutricional" style="height: 100%; max-height: 300px; object-fit: cover;">
-    </div>
-  </section>
+  <!-- Chat -->
+  <div class="chat-container">
+    <div class="chat-header">💬 Suporte</div>
 
-  <section id="servicos">
-    <h2>Serviços</h2>
-    <div class="services">
-      <div class="service">
-        <h3>Psicologia Nutricional</h3>
-        <p>Entenda sua relação com a comida e promova uma alimentação consciente.</p>
-      </div>
-      <div class="service">
-        <h3>Psicoterapia Individual</h3>
-        <p>Atendimento personalizado para autoconhecimento e equilíbrio emocional.</p>
-      </div>
-      <div class="service">
-        <h3>Terapia de Casal</h3>
-        <p>Fortaleça vínculos e melhore a comunicação com apoio profissional.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="top-profissionais">
-    <h2>Top Profissionais</h2>
-    <div class="services">
-      <div class="service">
-        <div>
-          <h3>👩‍⚕️ Dra. Mariana Souza</h3>
-          <p>Especialista em Psicologia Clínica e Nutricional, com foco em saúde mental integrada.</p>
-        </div>
-        <button class="tipo-btn" onclick="window.location.href='Mariana.html'">Ver perfil</button>
-      </div>
-      <div class="service">
-        <div>
-          <h3>👨‍⚕️ Dr. Lucas Fernandes</h3>
-          <p>Nutricionista comportamental e consultor em hábitos alimentares saudáveis.</p>
-        </div>
-        <button class="tipo-btn" onclick="window.location.href='Mariana.html'">Ver perfil</button>
-      </div>
-      <div class="service">
-        <div>
-          <h3>👩‍⚕️ Dra. Fernanda Lima</h3>
-          <p>Psicóloga especialista em Terapia Cognitivo-Comportamental e gestão emocional.</p>
-        </div>
-        <button class="tipo-btn" onclick="window.location.href='Mariana.html'">Ver perfil</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="agendamento">
-    <h2>Agende sua consulta</h2>
-    <div class="agenda-wrapper">
-      <label for="data">Selecione a data:</label>
-      <input type="date" id="data">
-      
-      <label>Escolha o horário:</label>
-      <div class="horarios-container">
-        <button class="horario-btn" data-hora="08:00">08:00</button>
-        <button class="horario-btn" data-hora="09:00">09:00</button>
-        <button class="horario-btn" data-hora="10:00">10:00</button>
-        <button class="horario-btn" data-hora="14:00">14:00</button>
-        <button class="horario-btn" data-hora="15:00">15:00</button>
-      </div>
-
-      <form class="form-agenda">
-        <label for="nome">Nome:</label><input id="nome" type="text" required>
-        <label for="email">Email:</label><input id="email" type="email" required>
-        <label for="telefone">Telefone:</label><input id="telefone" type="tel" placeholder="(XX) XXXXX-XXXX" required>
-        <button class="login-btn" type="submit" style="width: 100%; margin-top: 1rem;">Confirmar agendamento</button>
-      </form>
+    <div class="chat-body" id="chatBody">
+      <!-- Mensagens aparecem aqui -->
     </div>
 
-    <div class="meus-agendamentos" id="meusAgendamentos" style="display:none;">
-      <h3>Meus agendamentos</h3>
-      <div id="listaAgendamentos"></div>
-    </div>
-  </section>
-
-  <div class="modal" id="modalLogin">
-    <div class="modal-content">
-      <button id="fecharModal" class="modal-close">×</button>
-      <h2 id="tituloLogin">Entrar</h2>
-
-      <div id="formLogin">
-        <input type="email" id="loginEmail" placeholder="Email" required><br>
-        <input type="password" id="loginSenha" placeholder="Senha" required><br>
-        <button id="btnLogin" class="login-btn" style="width:100%;">Entrar</button>
-        <p>Ainda não tem conta? <span id="mostrarCadastro">Cadastre-se</span></p>
-      </div>
-
-      <div id="formCadastro" style="display:none;">
-        <h3 style="margin-bottom: .5rem;">Você é:</h3>
-        <div style="display:flex; gap:10px; margin-bottom:1rem;">
-          <button type="button" class="tipo-btn" data-tipo="cliente" style="flex:1; background:#fff; color: var(--text); border:2px solid var(--accent);">Cliente</button>
-          <button type="button" class="tipo-btn" data-tipo="profissional" onclick="window.location.href='profissional.html'" style="flex:1; background:#fff; color: var(--text); border:2px solid var(--accent);">Profissional</button>
-        </div>
-
-        <input type="text" id="cadastroNome" placeholder="Nome completo" required><br>
-        <input type="email" id="cadastroEmail" placeholder="Email" required><br>
-        <input type="password" id="cadastroSenha" placeholder="Senha" required><br>
-        <button id="btnCadastro" class="login-btn" style="width:100%;">Cadastrar</button>
-        <p>Já tem conta? <span id="mostrarLogin">Entrar</span></p>
-      </div>
+    <div class="chat-footer">
+      <input type="text" id="msgInput" placeholder="Digite sua mensagem...">
+      <button onclick="enviarMsg()">Enviar</button>
     </div>
   </div>
 
-  <footer id="contato">
-    <p>© 2026 Nutrimente. Todos os direitos reservados.</p>
-    <p>Contato: <a href="mailto:contato@nutrimente.com.br">contato@nutrimente.com.br</a></p>
-  </footer>
-
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
