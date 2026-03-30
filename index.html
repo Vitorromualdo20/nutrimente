@@ -1,29 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nutrimente - Profissional</title>
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Imagem grande -->
-  <img src="img/consulta.png" alt="consulta" class="bg-imagem">
 
-  <!-- Chat -->
-  <div class="chat-container">
-    <div class="chat-header">💬 Suporte</div>
+<header>
+  <a class="brand" href="index.html">
+    <img src="img/LogoNutrimente.png" alt="Logo">
+    Nutrimente
+  </a>
 
-    <div class="chat-body" id="chatBody">
-      <!-- Mensagens aparecem aqui -->
+  <nav>
+    <a href="#">Sobre</a>
+    <a href="#">Profissionais</a>
+    <a href="#">Home</a>
+    <a href="#">Consultas</a>
+    <a href="#">Meu perfil</a>
+  </nav>
+
+  <button class="logout" id="logoutBtn">Login</button>
+</header>
+
+<div class="container">
+
+  <div>
+    <div class="perfil-box">
+      <div class="perfil-header" style="background-image:url('img/bg-medico.jpg');"></div>
+
+      <div class="perfil-content">
+        <img src="img/doutor perfil.png" class="perfil-foto">
+
+        <div class="perfil-info">
+          <h2>Lazaro Martins</h2>
+          <span>Psicólogo | Nutricionista</span>
+
+          <div class="stars">★★★★★</div>
+
+          <button class="btn-agendar">Agendar Consulta</button>
+        </div>
+      </div>
     </div>
 
-    <div class="chat-footer">
-      <input type="text" id="msgInput" placeholder="Digite sua mensagem...">
-      <button onclick="enviarMsg()">Enviar</button>
+    <div class="section">
+      <h3>Sobre</h3>
+      <p>
+        Lazaro Martins é Psicólogo e Nutricionista com atuação integrada...
+      </p>
     </div>
+
+    <div class="section">
+      <h3>Formação Acadêmica</h3>
+      <p>
+        Lazaro Martins possui formação sólida e multidisciplinar...
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>Avaliações</h3>
+      <p>O profissional ainda não possui avaliações.</p>
+    </div>
+
   </div>
 
-  <script src="js/script.js"></script>
+  <div class="side-box">
+    <h3>Horários disponíveis</h3>
+    <img src="img/horarios.png" class="calendar-img" alt="Calendário">
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
