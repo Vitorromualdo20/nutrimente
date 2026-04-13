@@ -54,7 +54,7 @@ Boas práticas de acessibilidade e responsividade.
 
 # Links Externos
 
-https://arthuroliborges.github.io/NutriMente
+----
 
 # Equipe de Desenvolvimento
 
