@@ -765,8 +765,10 @@ class ApiHandler(BaseHTTPRequestHandler):
         return f"nutrimente-{safe[:48] or 'consulta'}"
 
     def serve_static(self, path):
-        normalized = "/" if path in {"", "/"} else path
-        relative_path = "index.html" if normalized == "/" else normalized.lstrip("/")
+        if path in {"", "/"}:
+            relative_path = "index.html"
+        else:
+            relative_path = path.lstrip("/")
         file_path = (APP_DIR / relative_path).resolve()
 
         if not str(file_path).startswith(str(APP_DIR)):
