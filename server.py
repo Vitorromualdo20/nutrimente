@@ -14,7 +14,7 @@ PORT = int(os.environ.get("PORT", 8000))
 
 
 BASE_DIR = Path(__file__).resolve().parent
-APP_DIR = BASE_DIR.parent
+APP_DIR = BASE_DIR
 DB_PATH = BASE_DIR / "nutrimente.db"
 HOST = "0.0.0.0"
 
