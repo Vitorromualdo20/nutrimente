@@ -769,7 +769,7 @@ class ApiHandler(BaseHTTPRequestHandler):
         relative_path = "index.html" if normalized == "/" else normalized.lstrip("/")
         file_path = (APP_DIR / relative_path).resolve()
 
-        if APP_DIR not in file_path.parents and file_path != APP_DIR:
+        if not str(file_path).startswith(str(APP_DIR)):
             return self.json_response(403, {"error": "Acesso negado."})
         if not file_path.exists() or not file_path.is_file():
             return self.json_response(404, {"error": "Página não encontrada."})
