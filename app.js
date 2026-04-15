@@ -163,7 +163,7 @@ function renderProfessionals() {
   const pageMap = {
     "mariana-souza": "mariana.html",
     "lucas-fernandes": "lucas.html",
-    "fernanda-lima": "fernanda.html",
+    "fernanda-lima": "fernandaa.html",
   };
 
   elements.professionalsGrid.innerHTML = state.professionals
