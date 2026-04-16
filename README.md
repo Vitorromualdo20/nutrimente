@@ -40,6 +40,8 @@ CSS (Estilização)
 
 JavaScript (ES6) (Lógica da aplicação)
 
+Python (Servidor)
+
 Persistência de dados: Local Storage (Para persistência de dados localizados e simplificados).
 
 # Ferramentas:
@@ -75,3 +77,7 @@ Lucio Nunes de Lira
 Bruno Zolotareff dos Santos
 
 Patricia Gallo
+
+Luiz Antonio
+
+Rafael Miranda
