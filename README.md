@@ -1,83 +1,43 @@
-# Software NutriMente - Integração de Saúde Mental e Nutricional
+# NutriMente
 
-Projeto Semestral Universitário do curso superior de Desenvolvimento de Software Multiplataforma (DSM) - FATEC Luigi Papaiz.
+Software web instalável como app (PWA) para apresentação da clínica, cadastro de utilizadores, escolha de profissionais, agendamento de consultas, notificações e prontuários.
 
-# Sobre o projeto
+## Executar
 
-O NutriMente é um sistema de plataforma Web projetado para conectar profissionais das áreas da psicologia e nutrição com seus clientes, oferecendo uma experiência personalizada que combina tecnologia, alimentação saudável e cuidado psicológico.
+1. Inicie o servidor:
 
-A plataforma busca facilitar o acesso a serviços de saúde mental e nutricional de forma personalizada e eficiente.
+```powershell
+python backend/server.py
+```
 
-Nosso projeto tem como base os Objetivos de Desenvolvimento Sustentável (ODS) da ONU:
+2. Abra [http://127.0.0.1:8000](http://127.0.0.1:8000) no navegador.
 
-ODS 3 – Saúde e Bem-Estar: Promovendo o acesso à saúde e bem-estar para todos.
+Evite abrir o `index.html` diretamente por `file:///...`, porque o fluxo de cadastro e login depende do servidor ativo.
 
-ODS 16 – Paz, Justiça e Instituições Eficazes: Promovendo a inclusão e o acesso à justiça (no contexto de conformidade legal, como LGPD).
+## Funcionalidades
 
-Além disso, o projeto está comprometido com a Lei de Software (Lei nº 9.609/98) e a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/18).
+- Cadastro e login de cliente ou profissional
+- Recuperação de senha por código temporário gerado na tela de acesso
+- Listagem de profissionais com páginas de perfil
+- Agendamento por serviço, modalidade, data e horário
+- Cancelamento e reagendamento pelo paciente com antecedência mínima de 12 horas
+- Sessão expira automaticamente após período de inatividade
+- Painel com agendamentos da conta autenticada
+- Central de notificações e lembretes na interface
+- Painel do profissional para editar perfil e gerir horários disponíveis
+- Prontuários/evolução por consulta dentro do painel profissional
+- Instalação como aplicativo via navegador (PWA)
+- Entrada em sala online privada via Jitsi
 
-# Funcionalidades previstas (Casos de Uso Principais)
+## Testes
 
-A plataforma NutriMente oferecerá um conjunto robusto de ferramentas para clientes e profissionais:
+```powershell
+python -m unittest tests.test_app -v
+```
 
-Gestão de Consultas e Agenda: Agendamento, reagendamento e visualização de consultas (online via videoconferência). Profissionais podem definir sua disponibilidade e preços.
+## Recuperação de senha
 
-Perfis e Busca Avançada: Cadastro de clientes e profissionais (incluindo verificação de documentação) e filtro de profissionais por especialidade e preço para clientes.
-
-Plano de Ação Personalizado: Criação de planos de acompanhamento (rotinas alimentares, técnicas psicológicas, metas quinzenais) e gerenciamento de progresso via Checklists.
-
-Comunicação e Engajamento: Chat interno em tempo real entre profissional e cliente e sistema de notificações e avaliação de usuários.
-
-Gestão Financeira e Legal: Realização de pagamentos, solicitação de reembolso e painel de gerenciamento de dados de pagamentos para o profissional.
-
-# Tecnologias utilizadas
-
-Front-end & Lógica Principal:
-
-HTML (Estrutura)
-
-CSS (Estilização)
-
-JavaScript (ES6) (Lógica da aplicação)
-
-Python (Servidor)
-
-Persistência de dados: Local Storage (Para persistência de dados localizados e simplificados).
-
-# Ferramentas:
-
-Figma: Para prototipação e design da interface de usuário.
-
-Inkscape: Para criação de vetores e elementos gráficos.
-
-Git e GitHub para versionamento e colaboração.
-
-Boas práticas de acessibilidade e responsividade.
-
-# Links Externos
-
-----
-
-# Equipe de Desenvolvimento
-
-Arthur de Oliveira Borges
-
-Diego Lima Henrique
-
-Gabriel Benatto Alencar Stolses
-
-Gabriely Benito Monteiro
-
-Vitor Antonio Romualdo
-
-# Orientadores
-
-Lucio Nunes de Lira
-
-Bruno Zolotareff dos Santos
-
-Patricia Gallo
-
-Luiz Antonio
-
-Rafael Miranda
+- Na tela de login, use `Esqueci minha senha`
+- Informe o email da conta para gerar um código temporário
+- Em ambiente local, o código é mostrado na interface para facilitar os testes
+- Depois informe o código e a nova senha

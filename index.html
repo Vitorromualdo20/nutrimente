@@ -1,548 +1,600 @@
-<!doctype html>
-
+﻿<!doctype html>
 <html lang="pt-BR">
-
 <head>
-
   <meta charset="utf-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Nutrimente | Plataforma de cuidado em psicologia nutricional</title>
-
+  <title>Nutrimente | Psicologia, nutrição e cuidado integrado com agendamento online</title>
   <meta
-
     name="description"
-
-    content="Software da Nutrimente para apresentar a clínica, cadastrar pacientes e profissionais, agendar consultas e acompanhar atendimentos online."
-
+    content="A Nutrimente reúne cuidado em saúde mental e alimentação com agendamento online, profissionais apresentados com transparência, pagamento claro e proteção de dados."
   />
-
-  <link rel="stylesheet" href="styles.css" />
-
+  <meta
+    name="keywords"
+    content="psicologia nutricional, nutrição comportamental, terapia online, saúde mental, alimentação, psicoterapia individual, agendamento online, clínica de psicologia, LGPD saúde"
+  />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Nutrimente" />
+  <link rel="canonical" href="https://www.nutrimente.com.br/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Nutrimente" />
+  <meta property="og:title" content="Nutrimente | Psicologia, nutrição e cuidado integrado" />
+  <meta property="og:description" content="Atendimento em saúde mental e alimentação com perfis profissionais transparentes, agendamento online e fluxo de pagamento claro." />
+  <meta property="og:url" content="https://www.nutrimente.com.br/" />
+  <meta property="og:image" content="https://www.nutrimente.com.br/img/logo-nutrimente.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nutrimente | Psicologia, nutrição e cuidado integrado" />
+  <meta name="twitter:description" content="Escolha profissionais com clareza, agende online e acompanhe pagamentos e consultas em um ambiente acolhedor." />
+  <meta name="twitter:image" content="https://www.nutrimente.com.br/img/logo-nutrimente.png" />
+  <meta name="theme-color" content="#1651aa" />
+  <link rel="icon" type="image/png" href="img/logo-nutrimente.png" />
+  <link rel="apple-touch-icon" href="img/logo-nutrimente.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalBusiness",
+      "name": "Nutrimente",
+      "url": "https://www.nutrimente.com.br/",
+      "logo": "https://www.nutrimente.com.br/img/logo-nutrimente.png",
+      "description": "Plataforma de cuidado integrado em saúde mental e alimentação com agendamento online e acompanhamento profissional.",
+      "areaServed": "Brasil",
+      "availableLanguage": ["pt-BR"],
+      "sameAs": []
+    }
+  </script>
 </head>
-
 <body>
-
   <div class="page-shell">
-
     <header class="site-header">
-
       <a class="brand" href="#inicio">
-
-        <img src="https://raw.githubusercontent.com/Vitorromualdo20/nutrimente/refs/heads/main/logo-nutrimente.png" alt="Logo Nutrimente" class="brand-logo">
+        <img class="brand-logo" src="img/logo-nutrimente.png" alt="Logo da Nutrimente" />
         <span>
-
           <strong>Nutrimente</strong>
-
           <small>Cuidado integrado em saúde mental e alimentação</small>
-
         </span>
-
       </a>
 
-
-
       <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="menuNav">
-
         Menu
-
       </button>
 
-
-
       <nav class="site-nav" id="menuNav" aria-label="Navegação principal">
-
         <a href="#sobre">Sobre</a>
-
+        <a href="#comoFunciona">Como funciona</a>
         <a href="#servicos">Serviços</a>
-
         <a href="#profissionais">Profissionais</a>
-
         <a href="#agenda">Agendamento</a>
-
+        <a href="#seguranca">LGPD e segurança</a>
+        <a href="/politica-de-privacidade.html">Privacidade</a>
+        <a class="hidden" id="navNotifications" href="#notificacoes">Notificações</a>
+        <a class="hidden" id="navProfessional" href="#painelProfissional">Painel Profissional</a>
+        <a class="hidden" id="navAdmin" href="#adminSection">Admin</a>
         <a href="#contato">Contato</a>
-
       </nav>
 
-
-
       <div class="header-actions">
-
+        <button class="ghost-btn hidden" id="installAppButton" type="button">Instalar app</button>
         <button class="ghost-btn hidden" id="dashboardShortcut" type="button">Meus agendamentos</button>
-
         <button class="primary-btn" id="openAuthModal" type="button">Entrar</button>
-
       </div>
-
     </header>
 
-
-
     <main>
-
       <section class="hero-section" id="inicio">
-
         <div class="hero-copy">
-
+          <p class="eyebrow">Software institucional + operacional</p>
           <h1>Uma clínica digital para acolher, orientar e agendar com clareza.</h1>
-
           <p class="hero-text">
-
-            A Nutrimente reúne apresentação da clínica, perfis profissionais, cadastro de utilizadores,
-
-            gestão de consultas e acesso rápido à sala de atendimento online.
-
+            A Nutrimente conecta psicologia e alimentação em uma experiência acolhedora, segura e fácil de entender,
+            desde a escolha do profissional até o pagamento e o acompanhamento da consulta.
           </p>
-
           <div class="hero-actions">
-
             <a class="primary-btn" href="#agenda">Agendar consulta</a>
-
             <a class="secondary-btn" href="#profissionais">Conhecer a equipa</a>
-
           </div>
-
+          <div class="trust-inline">
+            <span class="trust-badge">Pagamento claro e sem surpresa</span>
+            <span class="trust-badge">Atendimento online ou presencial</span>
+            <span class="trust-badge">Dados protegidos com foco em LGPD</span>
+          </div>
           <div class="hero-metrics">
-
             <article><strong>3</strong><span>especialistas ativos</span></article>
-
             <article><strong>6</strong><span>horários por dia</span></article>
-
             <article><strong>2</strong><span>modalidades de consulta</span></article>
-
           </div>
-
         </div>
-
-
 
         <aside class="hero-panel">
-
           <div class="hero-logo-wrap">
-
-            <img class="hero-logo" src="https://raw.githubusercontent.com/Vitorromualdo20/nutrimente/refs/heads/main/logo-nutrimente.png" alt="Identidade visual da Nutrimente" />
-
+            <img class="hero-logo" src="img/logo-nutrimente.png" alt="Identidade visual da Nutrimente" />
           </div>
-
           <p class="panel-label">Fluxo principal</p>
-
           <ol class="journey-list">
-
             <li>Criar conta como cliente ou profissional</li>
-
             <li>Escolher especialista, serviço, data e horário</li>
-
             <li>Acompanhar agendamentos e entrar na sala online</li>
-
           </ol>
 
-
-
           <div class="status-card">
-
             <span class="status-dot"></span>
-
             <div>
-
-              <strong>Agenda integrada</strong>
-
-              <p>Bloqueio automático de horários por profissional.</p>
-
+              <strong>Agenda e pagamento integrados</strong>
+              <p>Bloqueio automático de horários, carteira digital e confirmação clara do atendimento.</p>
             </div>
-
           </div>
-
         </aside>
-
       </section>
 
-
+      <section class="trust-band" aria-label="Indicadores de confiança">
+        <article>
+          <strong>Profissionais identificados</strong>
+          <span>Apresentação com conselho e abordagem clínica.</span>
+        </article>
+        <article>
+          <strong>Fluxo transparente</strong>
+          <span>Você vê valor, saldo, forma de pagamento e confirmação antes de concluir.</span>
+        </article>
+        <article>
+          <strong>Presença profissional</strong>
+          <span>Site preparado para domínio próprio, e-mail institucional e operação clínica séria.</span>
+        </article>
+      </section>
 
       <section class="content-section" id="sobre">
-
         <div class="section-heading">
-
           <p class="eyebrow">Sobre a clínica</p>
-
-          <h2>Psicologia nutricional com abordagem humana e estruturada.</h2>
-
+          <h2>Psicologia nutricional com abordagem humana, técnica e continuidade de cuidado.</h2>
         </div>
-
         <div class="story-grid">
-
           <article class="story-card">
-
             <h3>Propósito</h3>
-
             <p>A Nutrimente conecta saúde mental, relação com a alimentação e rotina prática para construir mudanças sustentáveis.</p>
-
           </article>
-
           <article class="story-card">
-
             <h3>Atendimento</h3>
-
             <p>O software centraliza descoberta da clínica, triagem, marcação de consulta e continuidade do vínculo.</p>
-
           </article>
-
           <article class="story-card">
-
             <h3>Experiência digital</h3>
-
             <p>Navegação adaptada para desktop e mobile, com feedback visual e ações claras em cada etapa.</p>
-
           </article>
-
         </div>
-
+        <div class="about-layout">
+          <article class="story-card">
+            <h3>Para quem é</h3>
+            <p>Pessoas que buscam cuidar da relação com a alimentação, da saúde mental e da rotina com acompanhamento profissional e linguagem acessível.</p>
+          </article>
+          <article class="story-card">
+            <h3>O que nos torna confiáveis</h3>
+            <p>Perfis profissionais transparentes, preço visível antes do agendamento, confirmação de atendimento e atenção à privacidade dos dados.</p>
+          </article>
+        </div>
       </section>
 
-
+      <section class="content-section" id="comoFunciona">
+        <div class="section-heading">
+          <p class="eyebrow">Como funciona</p>
+          <h2>Um caminho simples do primeiro acesso até a consulta.</h2>
+        </div>
+        <div class="process-grid">
+          <article class="process-card">
+            <span class="process-step">1</span>
+            <h3>Conheça a clínica</h3>
+            <p>Veja a proposta de cuidado, os serviços disponíveis e os profissionais com clareza.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-step">2</span>
+            <h3>Escolha com confiança</h3>
+            <p>Compare perfis, especialidades, modalidade e valores antes de marcar.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-step">3</span>
+            <h3>Adicione saldo ou pague</h3>
+            <p>Use a carteira digital com Pix ou cartão e acompanhe tudo em um extrato simples.</p>
+          </article>
+          <article class="process-card">
+            <span class="process-step">4</span>
+            <h3>Acompanhe a jornada</h3>
+            <p>Receba confirmações, veja lembretes, reagende quando necessário e entre na sala online com rapidez.</p>
+          </article>
+        </div>
+      </section>
 
       <section class="content-section" id="servicos">
-
         <div class="section-heading">
-
           <p class="eyebrow">Serviços</p>
-
           <h2>Jornada terapêutica e nutricional em um único ambiente.</h2>
-
         </div>
-
         <div class="services-grid">
-
           <article class="service-card">
-
             <h3>Psicologia Nutricional</h3>
-
             <p>Entendimento da relação entre emoções, hábitos, corpo e alimentação.</p>
-
           </article>
-
           <article class="service-card">
-
             <h3>Psicoterapia Individual</h3>
-
             <p>Atendimento clínico focado em autoconhecimento, gestão emocional e saúde mental.</p>
-
           </article>
-
           <article class="service-card">
-
             <h3>Terapia de Casal</h3>
-
             <p>Fortalecimento do diálogo, construção de acordos e suporte para dinâmicas relacionais.</p>
-
           </article>
-
         </div>
-
       </section>
 
-
+      <section class="content-section" id="paymentFlow">
+        <div class="section-heading">
+          <p class="eyebrow">Pagamento claro</p>
+          <h2>Sem etapas confusas: você sabe exatamente como a consulta será paga.</h2>
+        </div>
+        <div class="payment-grid">
+          <article class="story-card">
+            <h3>1. Veja o valor antes de concluir</h3>
+            <p>O resumo da consulta mostra serviço, modalidade, data, horário e valor total antes da confirmação.</p>
+          </article>
+          <article class="story-card">
+            <h3>2. Use saldo na carteira</h3>
+            <p>Você pode adicionar fundos com Pix ou cartão e utilizar esse saldo nos próximos agendamentos.</p>
+          </article>
+          <article class="story-card">
+            <h3>3. Receba confirmação</h3>
+            <p>Após o pagamento, a plataforma confirma o agendamento e registra a movimentação no extrato.</p>
+          </article>
+        </div>
+      </section>
 
       <section class="content-section" id="profissionais">
-
         <div class="section-heading">
-
           <p class="eyebrow">Profissionais</p>
-
-          <h2>Especialistas apresentados com clareza para apoiar a escolha do paciente.</h2>
-
+          <h2>Especialistas apresentados com clareza para apoiar uma decisão segura e consciente.</h2>
         </div>
-
         <div class="professionals-grid" id="professionalsGrid">
-
           <article class="empty-card">Carregando profissionais...</article>
-
         </div>
-
       </section>
 
-
-
-      <section class="content-section dashboard-section hidden" id="dashboardSection">
-
+      <section class="content-section hidden" id="profileSection">
+        <div class="panel-toolbar">
+          <button class="ghost-btn" id="profileBackButton" type="button">Voltar para a equipa</button>
+        </div>
         <div class="section-heading">
-
-          <p class="eyebrow">Área do utilizador</p>
-
-          <h2>Meus agendamentos</h2>
-
+          <p class="eyebrow" id="profileSectionCouncil">Perfil profissional</p>
+          <h2 id="profileSectionName">Especialista Nutrimente</h2>
+          <p class="hero-text" id="profileSectionTitle"></p>
         </div>
-
-        <div class="appointments-list" id="appointmentsList">
-
-          <article class="empty-card">Faça login para visualizar seus agendamentos.</article>
-
+        <div class="profile-highlight">
+          <p id="profileSectionQuote"></p>
         </div>
-
+        <div class="professional-meta" id="profileSectionChips"></div>
+        <div class="profile-grid">
+          <article class="story-card">
+            <h3>Bio</h3>
+            <p id="profileSectionBio"></p>
+          </article>
+          <article class="story-card">
+            <h3>Especialidades</h3>
+            <ul class="profile-list" id="profileSectionSpecialties"></ul>
+          </article>
+          <article class="story-card">
+            <h3>Abordagem</h3>
+            <ul class="profile-list" id="profileSectionApproach"></ul>
+          </article>
+          <article class="story-card">
+            <h3>Experiência</h3>
+            <ul class="profile-list" id="profileSectionExperience"></ul>
+          </article>
+        </div>
       </section>
 
-
-
-      <section class="content-section booking-section" id="agenda">
-
+      <section class="content-section dashboard-section hidden" id="walletSection">
         <div class="section-heading">
-
-          <p class="eyebrow">Agendamento</p>
-
-          <h2>Reserve sua consulta com o profissional mais adequado.</h2>
-
+          <p class="eyebrow">Carteira</p>
+          <h2>Saldo para consultas</h2>
         </div>
+        <div class="wallet-grid">
+          <article class="wallet-card wallet-balance-card">
+            <p class="summary-label">Saldo disponivel</p>
+            <strong id="walletBalance">R$ 0,00</strong>
+            <p id="walletBalanceHint">Adicione fundos para pagar consultas diretamente pela plataforma.</p>
+            <div class="wallet-pills" id="walletPriceGuide"></div>
+          </article>
 
-
-
-        <div class="booking-layout">
-
-          <form class="booking-form" id="bookingForm">
-
-            <div class="field-grid">
-
-              <label>Profissional<select id="professionalId" required></select></label>
-
-              <label>Serviço<select id="serviceSelect" required></select></label>
-
-            </div>
-
-
-
-            <div class="field-grid">
-
-              <label>
-
-                Modalidade
-
-                <select id="modeSelect" required>
-
-                  <option value="online">Online</option>
-
-                  <option value="presencial">Presencial</option>
-
-                </select>
-
-              </label>
-
-              <label>Data da consulta<input id="appointmentDate" type="date" required /></label>
-
-            </div>
-
-
-
+          <form class="booking-form" id="walletForm">
+            <h3>Adicionar fundos</h3>
             <div>
-
-              <span class="field-label">Horários disponíveis</span>
-
-              <div class="slots-grid" id="slotsGrid"></div>
-
+              <span class="field-label">Valores rápidos</span>
+              <div class="wallet-pills" id="walletPresetAmounts"></div>
             </div>
+            <label>
+              Valor da recarga
+              <input id="walletAmount" type="text" inputmode="decimal" placeholder="Ex.: 200,00" required />
+            </label>
+            <label>
+              Forma de pagamento
+              <select id="walletPaymentMethod">
+                <option value="card">Cartão de crédito</option>
+                <option value="pix">Pix</option>
+              </select>
+            </label>
+            <p class="wallet-note">Digite um valor entre R$ 10,00 e R$ 5.000,00.</p>
+            <button class="primary-btn submit-btn" type="submit">Gerar pagamento</button>
+          </form>
+        </div>
+        <div class="records-list" id="walletPendingTopups">
+          <article class="empty-card">Nenhum pagamento pendente no momento.</article>
+        </div>
+        <div class="records-list" id="walletTransactions">
+          <article class="empty-card">Faça login para visualizar sua carteira.</article>
+        </div>
+      </section>
+      <section class="content-section dashboard-section hidden" id="dashboardSection">
+        <div class="section-heading">
+          <p class="eyebrow">Área do utilizador</p>
+          <h2>Meus agendamentos</h2>
+        </div>
+        <div class="appointments-list" id="appointmentsList">
+          <article class="empty-card">Faça login para visualizar seus agendamentos.</article>
+        </div>
+      </section>
 
+      <section class="content-section dashboard-section hidden" id="notificationsSection">
+        <div class="section-heading">
+          <p class="eyebrow">Alertas</p>
+          <h2>Notificações e lembretes</h2>
+        </div>
+        <div class="panel-toolbar">
+          <button class="secondary-btn" id="enableBrowserNotifications" type="button">Ativar alertas do navegador</button>
+          <button class="ghost-btn" id="markNotificationsRead" type="button">Marcar como lidas</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+          <article class="empty-card">Faça login para visualizar notificações.</article>
+        </div>
+      </section>
 
+      <section class="content-section dashboard-section hidden" id="professionalSection">
+        <div class="section-heading">
+          <p class="eyebrow">Painel profissional</p>
+          <h2>Perfil, horários e prontuários</h2>
+        </div>
 
-            <div class="field-grid">
-
-              <label>Nome do paciente<input id="patientName" type="text" minlength="3" required /></label>
-
-              <label>Email<input id="patientEmail" type="email" required /></label>
-
-            </div>
-
-
-
-            <div class="field-grid">
-
-              <label>Telefone<input id="patientPhone" type="tel" required /></label>
-
-              <label>Observações<input id="appointmentNotes" type="text" placeholder="Preferências, contexto, objetivo..." /></label>
-
-            </div>
-
-
-
-            <button class="primary-btn submit-btn" type="submit">Confirmar agendamento</button>
-
+        <div class="professional-grid">
+          <form class="booking-form" id="professionalProfileForm">
+            <h3>Editar perfil</h3>
+            <label>Título profissional<input id="profileTitle" type="text" required /></label>
+            <label>Bio<textarea id="profileBio" rows="4" required></textarea></label>
+            <label>Frase de destaque<input id="profileQuote" type="text" required /></label>
+            <label>Especialidades (uma por linha)<textarea id="profileSpecialties" rows="4"></textarea></label>
+            <label>Abordagem (uma por linha)<textarea id="profileApproach" rows="4"></textarea></label>
+            <label>Experiência (uma por linha)<textarea id="profileExperience" rows="4"></textarea></label>
+            <button class="primary-btn submit-btn" type="submit">Salvar perfil</button>
           </form>
 
+          <form class="booking-summary" id="professionalAvailabilityForm">
+            <h3>Gerir horários disponíveis</h3>
+            <p>Selecione os blocos de atendimento por dia da semana.</p>
+            <div class="availability-grid" id="availabilityGrid"></div>
+            <button class="primary-btn submit-btn" type="submit">Salvar horários</button>
+          </form>
+        </div>
 
+        <div class="records-list" id="professionalAppointmentsList">
+          <article class="empty-card">Faça login como profissional para gerir consultas e prontuários.</article>
+        </div>
+      </section>
+
+      <section class="content-section dashboard-section hidden" id="adminSection">
+        <div class="section-heading">
+          <p class="eyebrow">Administração</p>
+          <h2>Painel administrativo</h2>
+        </div>
+        <div class="story-grid" id="adminStats">
+          <article class="empty-card">Faça login como administrador para visualizar utilizadores e transações.</article>
+        </div>
+        <div class="professional-grid">
+          <div class="booking-summary">
+            <h3>Utilizadores</h3>
+            <div class="records-list" id="adminUsersList">
+              <article class="empty-card">Sem dados carregados.</article>
+            </div>
+          </div>
+          <div class="booking-summary">
+            <h3>Segurança e LGPD</h3>
+            <div class="records-list" id="adminSecurityNotes">
+              <article class="empty-card">Sem dados carregados.</article>
+            </div>
+          </div>
+        </div>
+        <div class="records-list" id="adminTransactionsList">
+          <article class="empty-card">Sem transações carregadas.</article>
+        </div>
+      </section>
+
+      <section class="content-section booking-section" id="agenda">
+        <div class="section-heading">
+          <p class="eyebrow">Agendamento</p>
+          <h2>Reserve sua consulta com valor claro, horário protegido e confirmação imediata.</h2>
+        </div>
+
+        <div class="booking-layout">
+          <form class="booking-form" id="bookingForm">
+            <div class="field-grid">
+              <label>Profissional<select id="professionalId" required></select></label>
+              <label>Serviço<select id="serviceSelect" required></select></label>
+            </div>
+
+            <div class="field-grid">
+              <label>
+                Modalidade
+                <select id="modeSelect" required>
+                  <option value="online">Online</option>
+                  <option value="presencial">Presencial</option>
+                </select>
+              </label>
+              <label>Data da consulta<input id="appointmentDate" type="date" required /></label>
+            </div>
+
+            <div>
+              <span class="field-label">Horários disponíveis</span>
+              <div class="slots-grid" id="slotsGrid"></div>
+            </div>
+
+            <div class="field-grid">
+              <label>Nome do paciente<input id="patientName" type="text" minlength="3" required /></label>
+              <label>Email<input id="patientEmail" type="email" required /></label>
+            </div>
+
+            <div class="field-grid">
+              <label>Telefone<input id="patientPhone" type="tel" required /></label>
+              <label>Observações<input id="appointmentNotes" type="text" placeholder="Preferências, contexto, objetivo..." /></label>
+            </div>
+
+            <button class="primary-btn submit-btn" type="submit">Confirmar agendamento</button>
+          </form>
 
           <aside class="booking-summary" id="bookingSummary">
-
             <p class="summary-label">Resumo da escolha</p>
-
             <h3>Nenhum horário selecionado</h3>
-
             <p>Escolha um profissional, uma data e um horário para visualizar o resumo.</p>
-
             <ul class="summary-list">
-
               <li>Login necessário para concluir o agendamento.</li>
-
               <li>Horários bloqueados automaticamente quando já reservados.</li>
-
+              <li>O valor aparece antes da confirmação e pode ser pago com saldo da carteira.</li>
+              <li>Cancelamento e reagendamento pelo paciente exigem 12 horas de antecedência.</li>
               <li>Consultas online abrem em sala privada da plataforma.</li>
-
             </ul>
-
           </aside>
-
         </div>
-
       </section>
 
-
+      <section class="content-section" id="seguranca">
+        <div class="section-heading">
+          <p class="eyebrow">LGPD e segurança</p>
+          <h2>Privacidade, consentimento e proteção de dados como parte da experiência.</h2>
+        </div>
+        <div class="legal-grid">
+          <article class="story-card">
+            <h3>Proteção de dados</h3>
+            <p>O acesso a informações de pacientes, profissionais e transações é restrito por perfil e autenticação.</p>
+          </article>
+          <article class="story-card">
+            <h3>Transparência</h3>
+            <p>Preço, saldo, notificações, histórico financeiro e regras de cancelamento ficam visíveis dentro da plataforma.</p>
+          </article>
+          <article class="story-card">
+            <h3>Boas práticas LGPD</h3>
+            <p>Base pronta para política de privacidade, consentimento, retenção mínima de dados e operação com domínio institucional.</p>
+          </article>
+        </div>
+        <div class="legal-note">
+          <strong>Recomendação para produção:</strong>
+          publicar o site em domínio próprio, usar e-mail institucional, política de privacidade, termos de uso e integração real com gateway homologado.
+        </div>
+        <div class="panel-toolbar">
+          <a class="secondary-btn" href="/politica-de-privacidade.html">Ler Política de Privacidade</a>
+          <a class="ghost-btn" href="/termos-de-uso.html">Ler Termos de Uso</a>
+        </div>
+      </section>
 
       <section class="content-section contact-section" id="contato">
-
         <div class="contact-card">
-
           <div>
-
             <p class="eyebrow">Contato</p>
-
-            <h2>Pronto para começar?</h2>
-
-            <p>Use a plataforma para reservar seu horário ou entre em contacto para tirar dúvidas sobre a abordagem da clínica.</p>
-
+            <h2>Pronto para tornar o MVP mais profissional?</h2>
+            <p>Use domínio próprio, e-mail institucional, perfis transparentes e um fluxo de agendamento confiável para transmitir segurança desde a primeira visita.</p>
           </div>
-
           <div class="contact-actions">
-
             <a class="primary-btn" href="mailto:contato@nutrimente.com.br">contato@nutrimente.com.br</a>
-
             <a class="secondary-btn" href="#agenda">Ir para agendamento</a>
-
           </div>
-
         </div>
-
       </section>
-
     </main>
 
-
-
     <footer class="site-footer">
-
+      <div class="footer-grid">
+        <div>
+          <strong>Nutrimente</strong>
+          <p>Plataforma de atendimento, apresentação institucional, carteira digital e gestão de agenda para cuidado integrado.</p>
+        </div>
+        <div>
+          <strong>Credibilidade digital</strong>
+          <p>Recomendado para produção: `www.nutrimente.com.br`, política de privacidade, termos de uso e e-mail institucional.</p>
+        </div>
+        <div>
+          <strong>Base legal</strong>
+          <p>Fluxo pensado para consentimento, transparência de cobrança e proteção de dados sensíveis.</p>
+          <p><a href="/politica-de-privacidade.html">Política de Privacidade</a> · <a href="/termos-de-uso.html">Termos de Uso</a></p>
+        </div>
+      </div>
       <p>Nutrimente © 2026. Plataforma de atendimento, apresentação institucional e gestão de agenda.</p>
-
     </footer>
-
   </div>
-
-
 
   <div class="modal hidden" id="authModal" aria-hidden="true">
-
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-
       <button class="modal-close" id="closeAuthModal" type="button" aria-label="Fechar">×</button>
-
       <div class="modal-header">
-
         <p class="eyebrow">Acesso</p>
-
         <h2 id="authTitle">Entrar</h2>
-
       </div>
-
       <div class="tab-switch">
-
         <button class="tab-btn active" id="tabLogin" type="button">Login</button>
-
         <button class="tab-btn" id="tabRegister" type="button">Cadastro</button>
-
       </div>
-
       <form class="stack-form" id="loginForm">
-
         <label>Email<input id="loginEmail" type="email" required /></label>
-
         <label>Senha<input id="loginPassword" type="password" required /></label>
-
         <button class="primary-btn submit-btn" type="submit">Entrar na plataforma</button>
-
+        <button class="ghost-btn submit-btn" id="showForgotPassword" type="button">Esqueci minha senha</button>
       </form>
-
+      <form class="stack-form hidden" id="forgotPasswordForm">
+        <label>Email da conta<input id="forgotPasswordEmail" type="email" required /></label>
+        <button class="primary-btn submit-btn" type="submit">Gerar código de recuperação</button>
+        <label>Código de recuperação<input id="resetToken" type="text" placeholder="Ex.: ABC12345" /></label>
+        <label>Nova senha<input id="resetPassword" type="password" /></label>
+        <button class="secondary-btn submit-btn" id="confirmResetPassword" type="button">Redefinir senha</button>
+        <button class="ghost-btn submit-btn" id="backToLogin" type="button">Voltar ao login</button>
+      </form>
       <form class="stack-form hidden" id="registerForm">
-
         <div class="segmented-control">
-
           <button class="segment-btn active" data-role="cliente" type="button">Cliente</button>
-
           <button class="segment-btn" data-role="profissional" type="button">Profissional</button>
-
         </div>
-
         <input id="registerRole" type="hidden" value="cliente" />
-
         <label>Nome completo<input id="registerName" type="text" minlength="3" required /></label>
-
         <label>Email<input id="registerEmail" type="email" required /></label>
-
         <label>Senha<input id="registerPassword" type="password" required /></label>
-
         <div class="professional-fields hidden" id="professionalFields">
-
           <label>
-
             Conselho profissional
-
             <select id="registerCouncil">
-
               <option value="">Selecione</option>
-
               <option value="CFP">CFP</option>
-
               <option value="CFN">CFN</option>
-
             </select>
-
           </label>
-
           <label>Registro profissional<input id="registerDocument" type="text" placeholder="Ex.: 06/12345 ou 12345/SP" /></label>
-
         </div>
-
         <button class="primary-btn submit-btn" type="submit">Criar conta</button>
-
       </form>
-
     </div>
-
   </div>
-
-
 
   <div class="modal hidden" id="videoModal" aria-hidden="true">
-
     <div class="modal-card modal-video-card" role="dialog" aria-modal="true" aria-labelledby="videoTitle">
-
       <button class="modal-close" id="closeVideoModal" type="button" aria-label="Fechar">×</button>
-
       <div class="modal-header">
-
         <p class="eyebrow">Consulta online</p>
-
         <h2 id="videoTitle">Sala do atendimento</h2>
-
       </div>
-
       <div class="video-shell" id="videoShell"></div>
-
     </div>
-
   </div>
-
-
 
   <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
-
-
-  <script src="app.js"></script>
-
+  <script src="js/app.js"></script>
 </body>
-
 </html>
+
