@@ -16,8 +16,8 @@ from urllib.parse import parse_qs, urlparse
 BASE_DIR = Path(__file__).resolve().parent
 APP_DIR = BASE_DIR.parent
 DB_PATH = BASE_DIR / "nutrimente.db"
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = "0.0.0.0"
+PORT = 10000
 DEBUG = True  # Defina como False em produção — oculta tokens de reset e restringe CORS
 ALLOWED_ORIGIN = f"http://{HOST}:{PORT}"  # Substitua pelo domínio real em produção
 CANCELLATION_WINDOW_HOURS = 12
