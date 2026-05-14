@@ -16,7 +16,24 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") {
     return;
   }
+
+  const url = new URL(event.request.url);
+
+  // Rotas de API: network-first — nunca servir cache desatualizado de agendamentos/notificações
+  if (url.pathname.startsWith("/api/")) {
+    event.respondWith(
+      fetch(event.request).catch(() =>
+        new Response(JSON.stringify({ error: "Sem conexão com o servidor." }), {
+          status: 503,
+          headers: { "Content-Type": "application/json" },
+        })
+      )
+    );
+    return;
+  }
+
+  // Assets estáticos: cache-first
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request)),
+    caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
 });

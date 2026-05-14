@@ -475,5 +475,160 @@ class NutrimenteApiTests(unittest.TestCase):
         self.assertEqual(wallet["balanceCents"], initial_balance)
 
 
+    def test_login_with_wrong_password_returns_401(self):
+        email = self.unique_email("wrongpwd")
+        self.api_request(
+            "/register",
+            "POST",
+            {"nome": "Senha Errada", "email": email, "senha": "Senha123!", "tipo": "cliente"},
+        )
+        status, payload = self.api_request(
+            "/login",
+            "POST",
+            {"email": email, "senha": "SenhaErrada!"},
+        )
+        self.assertEqual(status, 401)
+        self.assertIn("error", payload)
+
+    def test_register_with_duplicate_email_returns_409(self):
+        email = self.unique_email("dupli")
+        self.api_request(
+            "/register",
+            "POST",
+            {"nome": "Primeiro", "email": email, "senha": "Senha123!", "tipo": "cliente"},
+        )
+        status, payload = self.api_request(
+            "/register",
+            "POST",
+            {"nome": "Segundo", "email": email, "senha": "Senha123!", "tipo": "cliente"},
+        )
+        self.assertEqual(status, 409)
+        self.assertIn("error", payload)
+
+    def test_register_with_invalid_email_returns_400(self):
+        for bad_email in ["naotem-arroba", "@semlocal.com", "x@.", ""]:
+            status, payload = self.api_request(
+                "/register",
+                "POST",
+                {"nome": "Email Ruim", "email": bad_email, "senha": "Senha123!", "tipo": "cliente"},
+            )
+            self.assertEqual(status, 400, msg=f"Email inválido '{bad_email}' deveria retornar 400")
+            self.assertIn("error", payload)
+
+    def test_reschedule_into_already_booked_slot_returns_409(self):
+        email_a = self.unique_email("slota")
+        email_b = self.unique_email("slotb")
+        for email, nome, tel in [
+            (email_a, "Cliente SlotA", "11900000001"),
+            (email_b, "Cliente SlotB", "11900000002"),
+        ]:
+            self.api_request(
+                "/register",
+                "POST",
+                {"nome": nome, "email": email, "senha": "Senha123!", "tipo": "cliente"},
+            )
+        token_a = self.api_request("/login", "POST", {"email": email_a, "senha": "Senha123!"})[1]["token"]
+        token_b = self.api_request("/login", "POST", {"email": email_b, "senha": "Senha123!"})[1]["token"]
+        professional_id = self.api_request("/professionals")[1]["professionals"][0]["id"]
+
+        self.add_funds(token_a)
+        self.add_funds(token_b)
+
+        date = self.future_business_date(14)
+
+        status, booking_a = self.api_request(
+            "/appointments",
+            "POST",
+            {
+                "professionalId": professional_id,
+                "servico": "psicologia_nutricional",
+                "modalidade": "online",
+                "data": date,
+                "hora": "14:00",
+                "nome": "Cliente SlotA",
+                "email": email_a,
+                "telefone": "11900000001",
+            },
+            token_a,
+        )
+        self.assertEqual(status, 201)
+
+        status, booking_b = self.api_request(
+            "/appointments",
+            "POST",
+            {
+                "professionalId": professional_id,
+                "servico": "psicologia_nutricional",
+                "modalidade": "online",
+                "data": date,
+                "hora": "15:00",
+                "nome": "Cliente SlotB",
+                "email": email_b,
+                "telefone": "11900000002",
+            },
+            token_b,
+        )
+        self.assertEqual(status, 201)
+        appointment_b_id = booking_b["appointment"]["id"]
+
+        # Tenta mover B para o horário já ocupado por A — deve retornar 409
+        status, payload = self.api_request(
+            f"/appointments/{appointment_b_id}",
+            "PUT",
+            {"data": date, "hora": "14:00"},
+            token_b,
+        )
+        self.assertEqual(status, 409)
+        self.assertIn("error", payload)
+
+    def test_unauthenticated_request_returns_401(self):
+        status, payload = self.api_request("/appointments")
+        self.assertEqual(status, 401)
+        self.assertIn("error", payload)
+
+    def test_double_booking_same_slot_returns_409(self):
+        email_c = self.unique_email("double_c")
+        email_d = self.unique_email("double_d")
+        for email, nome, tel in [
+            (email_c, "Cliente DoubleC", "11900000003"),
+            (email_d, "Cliente DoubleD", "11900000004"),
+        ]:
+            self.api_request(
+                "/register",
+                "POST",
+                {"nome": nome, "email": email, "senha": "Senha123!", "tipo": "cliente"},
+            )
+        token_c = self.api_request("/login", "POST", {"email": email_c, "senha": "Senha123!"})[1]["token"]
+        token_d = self.api_request("/login", "POST", {"email": email_d, "senha": "Senha123!"})[1]["token"]
+        professional_id = self.api_request("/professionals")[1]["professionals"][0]["id"]
+        self.add_funds(token_c)
+        self.add_funds(token_d)
+
+        date = self.future_business_date(15)
+        slot_data = {
+            "professionalId": professional_id,
+            "servico": "psicologia_nutricional",
+            "modalidade": "online",
+            "data": date,
+            "hora": "16:00",
+            "telefone": "11900000099",
+        }
+
+        status, _ = self.api_request(
+            "/appointments", "POST",
+            {**slot_data, "nome": "Cliente DoubleC", "email": email_c},
+            token_c,
+        )
+        self.assertEqual(status, 201)
+
+        status, payload = self.api_request(
+            "/appointments", "POST",
+            {**slot_data, "nome": "Cliente DoubleD", "email": email_d},
+            token_d,
+        )
+        self.assertEqual(status, 409)
+        self.assertIn("error", payload)
+
+
 if __name__ == "__main__":
     unittest.main()

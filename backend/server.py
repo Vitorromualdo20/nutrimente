@@ -1,4 +1,4 @@
-﻿import hashlib
+import hashlib
 import hmac
 import json
 import mimetypes
@@ -18,6 +18,8 @@ APP_DIR = BASE_DIR.parent
 DB_PATH = BASE_DIR / "nutrimente.db"
 HOST = "127.0.0.1"
 PORT = 8000
+DEBUG = True  # Defina como False em produção — oculta tokens de reset e restringe CORS
+ALLOWED_ORIGIN = f"http://{HOST}:{PORT}"  # Substitua pelo domínio real em produção
 CANCELLATION_WINDOW_HOURS = 12
 SESSION_IDLE_HOURS = 8
 REMINDER_LEAD_MINUTES = 60
@@ -192,6 +194,13 @@ def is_valid_professional_document(council, document_id):
 def slugify(value):
     normalized = re.sub(r"[^a-z0-9]+", "-", (value or "").strip().lower())
     return normalized.strip("-") or f"usuario-{secrets.token_hex(3)}"
+
+
+_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+def is_valid_email(email):
+    return bool(_EMAIL_RE.fullmatch(email or ""))
 
 
 def user_payload(row):
@@ -768,6 +777,17 @@ def init_db():
                 expires_at TEXT,
                 FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
             );
+
+            CREATE INDEX IF NOT EXISTS idx_appointments_user_id
+                ON appointments(user_id);
+            CREATE INDEX IF NOT EXISTS idx_appointments_professional_date
+                ON appointments(professional_id, data);
+            CREATE INDEX IF NOT EXISTS idx_notifications_user_read
+                ON notifications(user_id, is_read);
+            CREATE INDEX IF NOT EXISTS idx_sessions_user_id
+                ON sessions(user_id);
+            CREATE INDEX IF NOT EXISTS idx_wallet_transactions_user_id
+                ON wallet_transactions(user_id);
             """
         )
 
@@ -864,16 +884,20 @@ def init_db():
                 """,
                 (default_professional["id"],),
             )
+        service_case = "\n".join(
+            f"                WHEN '{k}' THEN {v}" for k, v in SERVICE_PRICES_CENTS.items()
+        )
+        mode_case = "\n".join(
+            f"                WHEN '{k}' THEN {v}" for k, v in MODE_PRICE_ADJUSTMENTS_CENTS.items()
+        )
         conn.execute(
-            """
+            f"""
             UPDATE appointments
             SET price_cents = CASE servico
-                WHEN 'psicologia_nutricional' THEN 18000
-                WHEN 'psicoterapia_individual' THEN 16000
-                WHEN 'terapia_casal' THEN 22000
+{service_case}
                 ELSE 0
             END + CASE modalidade
-                WHEN 'presencial' THEN 2000
+{mode_case}
                 ELSE 0
             END
             WHERE price_cents IS NULL OR price_cents = 0
@@ -888,7 +912,9 @@ class ApiHandler(BaseHTTPRequestHandler):
         return
 
     def end_headers(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
+        origin = self.headers.get("Origin", "")
+        allowed = "*" if DEBUG else ALLOWED_ORIGIN
+        self.send_header("Access-Control-Allow-Origin", allowed if DEBUG or origin == ALLOWED_ORIGIN else "null")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         super().end_headers()
@@ -1077,7 +1103,7 @@ class ApiHandler(BaseHTTPRequestHandler):
 
             if (
                 user["id"] == appointment["user_id"]
-                and appointment_datetime(appointment["data"], appointment["hora"]) - datetime.now()
+                and appointment_datetime(appointment["data"], appointment["hora"]) - datetime.utcnow()
                 < timedelta(hours=CANCELLATION_WINDOW_HOURS)
             ):
                 return self.json_response(
@@ -1165,7 +1191,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                 return self.json_response(403, {"error": "Sem permissão para reagendar este agendamento."})
             if (
                 user["id"] == appointment["user_id"]
-                and appointment_datetime(appointment["data"], appointment["hora"]) - datetime.now()
+                and appointment_datetime(appointment["data"], appointment["hora"]) - datetime.utcnow()
                 < timedelta(hours=CANCELLATION_WINDOW_HOURS)
             ):
                 return self.json_response(
@@ -1247,6 +1273,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             return None
 
         with get_db() as conn:
+            conn.execute("BEGIN IMMEDIATE")
             row = conn.execute(
                 """
                 SELECT users.id, users.nome, users.email, users.tipo, users.conselho, users.registro_profissional,
@@ -1260,18 +1287,16 @@ class ApiHandler(BaseHTTPRequestHandler):
                 (token,),
             ).fetchone()
 
-        if row is None:
-            self.json_response(401, {"error": "Sessão inválida ou expirada."})
-            return None
+            if row is None:
+                self.json_response(401, {"error": "Sessão inválida ou expirada."})
+                return None
 
-        expires_at = row["session_expires_at"]
-        if expires_at and datetime.utcnow() > parse_utc_iso(expires_at):
-            with get_db() as conn:
+            expires_at = row["session_expires_at"]
+            if expires_at and datetime.utcnow() > parse_utc_iso(expires_at):
                 conn.execute("DELETE FROM sessions WHERE token = ?", (token,))
-            self.json_response(401, {"error": "Sessão expirada. Faça login novamente."})
-            return None
+                self.json_response(401, {"error": "Sessão expirada. Faça login novamente."})
+                return None
 
-        with get_db() as conn:
             conn.execute(
                 "UPDATE sessions SET expires_at = ? WHERE token = ?",
                 (future_iso(hours=SESSION_IDLE_HOURS), token),
@@ -1359,7 +1384,7 @@ class ApiHandler(BaseHTTPRequestHandler):
 
         if len(nome) < 3:
             return self.json_response(400, {"error": "Nome inválido."})
-        if "@" not in email or "." not in email:
+        if not is_valid_email(email):
             return self.json_response(400, {"error": "Email inválido."})
         if len(senha) < 8:
             return self.json_response(
@@ -1514,7 +1539,7 @@ class ApiHandler(BaseHTTPRequestHandler):
 
     def handle_password_reset_request(self, data):
         email = (data.get("email") or "").strip().lower()
-        if "@" not in email or "." not in email:
+        if not is_valid_email(email):
             return self.json_response(400, {"error": "Informe um email válido."})
 
         with get_db() as conn:
@@ -1554,8 +1579,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             200,
             {
                 "message": "Código de recuperação gerado. Em produção ele seria enviado por e-mail.",
-                "resetToken": token,
-                "expiresInMinutes": 30,
+                **({"resetToken": token, "expiresInMinutes": 30} if DEBUG else {}),
             },
         )
 
@@ -1693,6 +1717,7 @@ class ApiHandler(BaseHTTPRequestHandler):
         )
 
     def handle_add_funds(self, user, data):
+        """Rota legada — delega para handle_create_wallet_topup e confirma automaticamente (ambiente local)."""
         amount_cents = data.get("amountCents")
         if amount_cents is None:
             amount_cents = parse_money_to_cents(data.get("amount"))
@@ -1705,17 +1730,19 @@ class ApiHandler(BaseHTTPRequestHandler):
                 amount_cents = None
 
         if amount_cents is None:
-            return self.json_response(400, {"error": "Informe um valor valido para a recarga."})
+            return self.json_response(400, {"error": "Informe um valor válido para a recarga."})
         if amount_cents < MIN_WALLET_TOP_UP_CENTS:
             return self.json_response(
                 400,
-                {"error": f"A recarga minima e de {format_brl(MIN_WALLET_TOP_UP_CENTS)}."},
+                {"error": f"A recarga mínima é de {format_brl(MIN_WALLET_TOP_UP_CENTS)}."},
             )
         if amount_cents > MAX_WALLET_TOP_UP_CENTS:
             return self.json_response(
                 400,
-                {"error": f"A recarga maxima por operacao e de {format_brl(MAX_WALLET_TOP_UP_CENTS)}."},
+                {"error": f"A recarga máxima por operação é de {format_brl(MAX_WALLET_TOP_UP_CENTS)}."},
             )
+        if (data.get("paymentMethod") or "card").strip().lower() not in WALLET_PAYMENT_METHODS:
+            return self.json_response(400, {"error": "Método de pagamento inválido para a recarga."})
 
         with get_db() as conn:
             topup = create_wallet_topup(conn, user["id"], amount_cents, "card", gateway_provider="simulado")
@@ -1743,7 +1770,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             return self.json_response(400, {"error": "Data e horário são obrigatórios."})
         if len(nome) < 3:
             return self.json_response(400, {"error": "Nome inválido."})
-        if "@" not in email or "." not in email:
+        if not is_valid_email(email):
             return self.json_response(400, {"error": "Email inválido."})
         if len(telefone) < 8:
             return self.json_response(400, {"error": "Telefone inválido."})
@@ -1762,7 +1789,7 @@ class ApiHandler(BaseHTTPRequestHandler):
         except ValueError:
             return self.json_response(400, {"error": "Data ou horário inválidos."})
 
-        if appointment_dt.date() < datetime.now().date():
+        if appointment_dt.date() < datetime.utcnow().date():
             return self.json_response(400, {"error": "Selecione uma data futura."})
 
         room_name = self.build_room_name(nome, appointment_date, appointment_time)
@@ -1859,6 +1886,7 @@ class ApiHandler(BaseHTTPRequestHandler):
                         f"{nome} marcou atendimento para {appointment_date} às {appointment_time}.",
                         external_key=f"booking:{cursor.lastrowid}:professional",
                     )
+                new_appointment_id = cursor.lastrowid
                 snapshot = wallet_payload(conn, user["id"])
         except sqlite3.IntegrityError:
             return self.json_response(
@@ -1871,7 +1899,7 @@ class ApiHandler(BaseHTTPRequestHandler):
             {
                 "message": "Agendamento confirmado.",
                 "appointment": {
-                    "id": cursor.lastrowid,
+                    "id": new_appointment_id,
                     "data": appointment_date,
                     "hora": appointment_time,
                     "nome": nome,
